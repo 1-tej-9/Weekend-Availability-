@@ -6,9 +6,9 @@ let shareMessage = "";
 
 
 // Sounds
-let kickSound = new Audio("sounds/kick.mp3");
-let goalSound = new Audio("sounds/goal.mp3");
-let missSound = new Audio("sounds/miss.mp3");
+let kickSound = new Audio("kick.mp3");
+let goalSound = new Audio("goal.mp3");
+let missSound = new Audio("miss.mp3");
 
 
 
