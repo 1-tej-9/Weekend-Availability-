@@ -234,22 +234,20 @@ showScreen("screen3");
 // PLACE
 
 
+// PLACE
+
 function choosePlace(place){
 
-
-match.place=place;
-
+match.place = place;
 
 
 if(place.includes("Homemade")){
 
-
 showScreen("chefScreen");
 
+return;
 
 }
-
-else{
 
 
 document.getElementById("detailsTitle").innerHTML =
@@ -257,7 +255,6 @@ document.getElementById("detailsTitle").innerHTML =
 
 
 document.getElementById("detailsInput").value="";
-
 
 
 if(place.includes("Café")){
@@ -273,19 +270,16 @@ document.getElementById("detailsText").innerHTML =
 
 else if(place.includes("Book")){
 
-
 document.getElementById("detailsTitle").innerHTML =
 "📚 Book Café mission";
 
 document.getElementById("detailsText").innerHTML =
 "Somewhere with books, coffee, and a chair that doesn't judge our reading speed. 😂";
 
-
 }
 
 
 else if(place.includes("Movie")){
-
 
 document.getElementById("detailsTitle").innerHTML =
 "🎬 Movie decision time";
@@ -293,28 +287,12 @@ document.getElementById("detailsTitle").innerHTML =
 document.getElementById("detailsText").innerHTML =
 "Choose wisely... snacks will be watching your decision. 🍿😂";
 
-
-}
-
-
 }
 
 
 showScreen("detailsScreen");
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
 // DETAILS
 
 
