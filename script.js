@@ -7,49 +7,68 @@ let match = {
 
 
 // =======================
+// SOUNDS (same folder)
+// =======================
+
+const kickSound = new Audio("kick.mp3");
+const goalSound = new Audio("goal.mp3");
+const missSound = new Audio("miss.mp3");
+
+
+
+// =======================
 // LOADING
 // =======================
 
 window.addEventListener("load", () => {
 
   setTimeout(() => {
-    document.getElementById("loadingScreen").style.display = "none";
-  }, 4000);
+
+    const loading = document.getElementById("loadingScreen");
+
+    if(loading){
+      loading.style.display = "none";
+    }
+
+  },4000);
 
 });
 
 
 
+
 // =======================
-// SCREEN CONTROL
+// SCREEN CHANGE
 // =======================
 
 function showScreen(id){
 
-  const screens = [
-    "screen1",
-    "screen2",
-    "screen3",
-    "chefScreen",
-    "screen4",
-    "result"
-  ];
-
-  screens.forEach(screen=>{
-
-    let element=document.getElementById(screen);
-
-    if(element){
-      element.classList.add("hidden");
-    }
-
-  });
+const screens = [
+"screen1",
+"screen2",
+"screen3",
+"chefScreen",
+"screen4",
+"result"
+];
 
 
-  document.getElementById(id)
-  .classList.remove("hidden");
+screens.forEach(screen=>{
+
+let el=document.getElementById(screen);
+
+if(el){
+el.classList.add("hidden");
+}
+
+});
+
+
+document.getElementById(id)
+.classList.remove("hidden");
 
 }
+
 
 
 
@@ -59,18 +78,42 @@ function showScreen(id){
 
 function acceptCall(){
 
-  const btn=document.getElementById("acceptBtn");
 
-  btn.innerHTML="⚽ Game On!";
+kickSound.currentTime=0;
+kickSound.play();
 
-  setTimeout(()=>{
 
-    showScreen("screen2");
+let ball=document.getElementById("ball");
 
-  },1200);
+
+ball.style.transition=
+"all 1.4s ease";
+
+
+ball.style.left="75%";
+
+ball.style.bottom="45%";
+
+ball.style.transform=
+"translateX(-50%) rotate(720deg) scale(.7)";
+
+
+
+setTimeout(()=>{
+
+
+showScreen("screen2");
+
+
+resetBall();
+
+
+},1500);
+
 
 
 }
+
 
 
 
@@ -80,14 +123,69 @@ function acceptCall(){
 
 function declineCall(){
 
-  document.querySelector(".card").innerHTML=
 
-  `
-  <h1>😢 Player unavailable</h1>
-  <p>
-  Maybe next weekend we will get the full squad together ⚽
-  </p>
-  `;
+missSound.currentTime=0;
+missSound.play();
+
+
+
+let ball=document.getElementById("ball");
+
+
+ball.style.left="90%";
+
+ball.style.bottom="75%";
+
+ball.style.transform=
+"rotate(-720deg)";
+
+
+
+setTimeout(()=>{
+
+
+showScreen("result");
+
+
+document.getElementById("finalText").innerHTML=`
+
+<h1>❌ MISS!</h1>
+
+<p>
+The shot went wide.
+</p>
+
+<h2>
+Maybe next weekend ⚽
+</h2>
+
+`;
+
+
+
+},1500);
+
+
+
+}
+
+
+
+
+
+function resetBall(){
+
+let ball=document.getElementById("ball");
+
+
+ball.style.transition="none";
+
+ball.style.left="50%";
+
+ball.style.bottom="90px";
+
+ball.style.transform=
+"translateX(-50%)";
 
 }
 
@@ -100,11 +198,12 @@ function declineCall(){
 
 function chooseDay(day){
 
-  match.day=day;
+match.day=day;
 
-  showScreen("screen3");
+showScreen("screen3");
 
 }
+
 
 
 
@@ -114,20 +213,20 @@ function chooseDay(day){
 
 function choosePlace(place){
 
-  match.place=place;
+match.place=place;
 
 
-  if(place.includes("Homemade")){
+if(place.includes("Homemade")){
 
-    showScreen("chefScreen");
+showScreen("chefScreen");
 
-  }
+}
 
-  else{
+else{
 
-    showScreen("screen4");
+showScreen("screen4");
 
-  }
+}
 
 }
 
@@ -135,29 +234,34 @@ function choosePlace(place){
 
 
 // =======================
-// CHEF MENU
+// FOOD
 // =======================
 
 function continueToTime(){
 
-  let food=document.getElementById("foodInput").value;
+
+let food =
+document.getElementById("foodInput").value;
 
 
-  if(food.trim()===""){
 
-    alert("👨‍🍳 Tell the chef what you want!");
+if(food.trim()===""){
 
-    return;
+alert("👨‍🍳 Please enter your favourite dish");
 
-  }
-
-
-  match.food=food;
-
-
-  showScreen("screen4");
+return;
 
 }
+
+
+match.food=food;
+
+
+showScreen("screen4");
+
+
+}
+
 
 
 
@@ -168,83 +272,97 @@ function continueToTime(){
 
 function chooseTime(time){
 
-  match.time=time;
+
+match.time=time;
 
 
-  startGame();
+startFinalShot();
+
+
+}
+
+
+
+
+
+// =======================
+// FINAL SHOT
+// =======================
+
+function startFinalShot(){
+
+
+showScreen("result");
+
+
+
+document.getElementById("finalText").innerHTML=`
+
+<h1>⚽ Final Shot...</h1>
+
+<p>
+The striker is ready!
+</p>
+
+`;
+
+
+
+let ball=document.getElementById("ball");
+
+
+setTimeout(()=>{
+
+
+kickSound.currentTime=0;
+
+kickSound.play();
+
+
+
+ball.style.transition=
+"all 1.5s cubic-bezier(.2,.8,.3,1)";
+
+
+
+ball.style.left="50%";
+
+ball.style.bottom="430px";
+
+ball.style.transform=
+"translateX(-50%) rotate(720deg) scale(.5)";
+
+
+
+},700);
+
+
+
+setTimeout(()=>{
+
+
+goalSound.currentTime=0;
+
+goalSound.play();
+
+
+let goal=document.getElementById("goal");
+
+goal.classList.add("goalShake");
+
+
+
+celebrate();
+
+
+
+},2300);
+
+
 
 }
 
 
-
-
-// =======================
-// GAME SEQUENCE
-// =======================
-
-function startGame(){
-
-  showScreen("result");
-
-
-  document.getElementById("finalText").innerHTML=
-
-  `
-  <h1>⚽ Game On!</h1>
-  <p>
-  Preparing the final kick...
-  </p>
-  `;
-
-
-  setTimeout(()=>{
-
-    shootBall();
-
-  },1000);
-
-}
-
-
-
-
-// =======================
-// BALL SHOOT
-// =======================
-
-function shootBall(){
-
-  let ball=document.getElementById("ball");
-
-  let goal=document.getElementById("goal");
-
-
-  ball.style.transition=
-  "all 1.5s cubic-bezier(.17,.67,.35,1.3)";
-
-
-  ball.style.bottom="430px";
-
-  ball.style.left="50%";
-
-  ball.style.transform=
-  "translateX(-50%) scale(.55) rotate(720deg)";
-
-
-  setTimeout(()=>{
-
-
-    goal.classList.add("goalShake");
-
-
-    celebration();
-
-
-  },1500);
-
-
-
-}
 
 
 
@@ -252,34 +370,61 @@ function shootBall(){
 // CELEBRATION
 // =======================
 
-function celebration(){
+function celebrate(){
 
 
-  document.getElementById("finalText").innerHTML=
+document.getElementById("finalText").innerHTML=`
 
-  `
-  <h1>🎉 GOOOOAL!!! ⚽</h1>
-
-  <p>
-  📅 ${match.day}<br>
-  📍 ${match.place}<br>
-  ${match.food ? "👨‍🍳 "+match.food+"<br>" : ""}
-  🕒 ${match.time}
-  </p>
-
-  `;
+<h1>
+🥅 GOOOOOOAAALLL!! ⚽🎉
+</h1>
 
 
+<h2>
+🏆 Match Confirmed
+</h2>
 
-  createConfetti();
+
+<p>
+📅 ${match.day}
+</p>
 
 
-  document
-  .getElementById("shareBtn")
-  .classList.remove("hidden");
+<p>
+📍 ${match.place}
+</p>
+
+
+${match.food ?
+`<p>👨‍🍳 ${match.food}</p>`
+:""}
+
+
+<p>
+🕒 ${match.time}
+</p>
+
+
+<p>
+See you this weekend 😄
+</p>
+
+
+`;
+
+
+
+createConfetti();
+
+
+document
+.getElementById("shareBtn")
+.classList.remove("hidden");
 
 
 }
+
+
 
 
 
@@ -289,45 +434,77 @@ function celebration(){
 
 function createConfetti(){
 
-  const area=document.getElementById("confetti");
+
+let box=
+document.getElementById("confetti");
 
 
-  for(let i=0;i<80;i++){
+if(!box) return;
 
 
-    let piece=document.createElement("span");
+
+for(let i=0;i<60;i++){
 
 
-    piece.style.position="absolute";
-
-    piece.style.width="8px";
-
-    piece.style.height="14px";
-
-    piece.style.background=
-    "white";
-
-    piece.style.left=
-    Math.random()*100+"%";
-
-    piece.style.top="-20px";
+let piece=document.createElement("span");
 
 
-    piece.style.transform=
-    `rotate(${Math.random()*360}deg)`;
+piece.style.position="absolute";
+
+piece.style.width="8px";
+
+piece.style.height="14px";
+
+piece.style.left=
+Math.random()*100+"%";
+
+piece.style.top="-20px";
 
 
-    piece.style.animation=
-    `fall ${2+Math.random()*3}s linear`;
+piece.style.background="white";
 
 
-    area.appendChild(piece);
+piece.style.animation=
+`drop 3s linear`;
 
 
-  }
+box.appendChild(piece);
 
 
 }
+
+
+}
+
+
+
+const confettiStyle=
+document.createElement("style");
+
+
+confettiStyle.innerHTML=`
+
+@keyframes drop {
+
+to {
+
+transform:
+translateY(700px)
+rotate(720deg);
+
+opacity:0;
+
+}
+
+}
+
+`;
+
+
+document.head.appendChild(confettiStyle);
+
+
+
 
 
 
@@ -338,72 +515,44 @@ function createConfetti(){
 function shareResult(){
 
 
- let text=
+let text=
 
- `⚽ Weekend Match Confirmed!
+`⚽ Weekend Match Confirmed!
 
 📅 ${match.day}
+
 📍 ${match.place}
+
 ${match.food ? "👨‍🍳 "+match.food : ""}
+
 🕒 ${match.time}
 
 GOOOAL! 🎉`;
 
 
- if(navigator.share){
 
-  navigator.share({
+if(navigator.share){
 
-    title:"Weekend Football Plan",
 
-    text:text
+navigator.share({
 
-  });
+title:"Weekend Match",
 
- }
+text:text
 
- else{
-
-  navigator.clipboard.writeText(text);
-
-  alert("📋 Match result copied!");
-
- }
+});
 
 
 }
 
+else{
 
 
-// =======================
-// CONFETTI ANIMATION
-// =======================
+navigator.clipboard.writeText(text);
 
-const style=document.createElement("style");
-
-style.innerHTML=`
-
-@keyframes fall{
-
-from{
-
-transform:translateY(0) rotate(0);
-
-opacity:1;
+alert("📋 Result copied!");
 
 }
 
 
-to{
-
-transform:translateY(700px) rotate(720deg);
-
-opacity:0;
-
 }
-
-}
-
-`;
-
-document.head.appendChild(style);
