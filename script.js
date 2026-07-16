@@ -1,249 +1,409 @@
-let selectedDay = "";
-let selectedPlace = "";
-let selectedTime = "";
-
-let shareMessage = "";
-
-
-// Sounds
-let kickSound = new Audio("./kick.mp3");
-let goalSound = new Audio("./goal.mp3");
-let missSound = new Audio("./miss.mp3");
-
-kickSound.volume = 1;
-goalSound.volume = 1;
-missSound.volume = 1;
+let match = {
+  day: "",
+  place: "",
+  food: "",
+  time: ""
+};
 
 
+// =======================
+// LOADING
+// =======================
 
-// ACCEPT CALL-UP
+window.addEventListener("load", () => {
+
+  setTimeout(() => {
+    document.getElementById("loadingScreen").style.display = "none";
+  }, 4000);
+
+});
+
+
+
+// =======================
+// SCREEN CONTROL
+// =======================
+
+function showScreen(id){
+
+  const screens = [
+    "screen1",
+    "screen2",
+    "screen3",
+    "chefScreen",
+    "screen4",
+    "result"
+  ];
+
+  screens.forEach(screen=>{
+
+    let element=document.getElementById(screen);
+
+    if(element){
+      element.classList.add("hidden");
+    }
+
+  });
+
+
+  document.getElementById(id)
+  .classList.remove("hidden");
+
+}
+
+
+
+// =======================
+// ACCEPT CALL
+// =======================
 
 function acceptCall(){
 
-    kickSound.play();
+  const btn=document.getElementById("acceptBtn");
 
-    let ball = document.getElementById("ball");
+  btn.innerHTML="⚽ Game On!";
 
-   ball.classList.remove("goalShot");
-ball.classList.add("kick");
+  setTimeout(()=>{
 
+    showScreen("screen2");
 
-    setTimeout(()=>{
+  },1200);
 
-        document.getElementById("screen1").classList.add("hidden");
-
-        document.getElementById("screen2").classList.remove("hidden");
-
-
-    },1500);
 
 }
 
 
 
-
-
+// =======================
 // DECLINE
+// =======================
 
 function declineCall(){
 
-    missSound.play();
+  document.querySelector(".card").innerHTML=
 
-
-    let ball = document.getElementById("ball");
-
-    ball.classList.add("miss");
-
-
-
-    setTimeout(()=>{
-
-
-        document.getElementById("screen1").classList.add("hidden");
-
-        document.getElementById("result").classList.remove("hidden");
-
-
-
-        document.getElementById("finalText").innerHTML = `
-
-        <h1>❌ MISS!</h1>
-
-        <p>The shot went wide.</p>
-
-        <br>
-
-        <p>Maybe another weekend.</p>
-
-        <br>
-
-        <h2>⚽ Good luck!</h2>
-
-        `;
-
-
-
-    },1500);
+  `
+  <h1>😢 Player unavailable</h1>
+  <p>
+  Maybe next weekend we will get the full squad together ⚽
+  </p>
+  `;
 
 }
 
 
 
 
-
+// =======================
 // DAY
+// =======================
 
 function chooseDay(day){
 
-    selectedDay = day;
+  match.day=day;
 
-
-    document.getElementById("screen2").classList.add("hidden");
-
-    document.getElementById("screen3").classList.remove("hidden");
+  showScreen("screen3");
 
 }
 
 
 
-
-
+// =======================
 // PLACE
+// =======================
 
 function choosePlace(place){
 
-    selectedPlace = place;
+  match.place=place;
 
 
-    document.getElementById("screen3").classList.add("hidden");
+  if(place.includes("Homemade")){
 
-    document.getElementById("screen4").classList.remove("hidden");
+    showScreen("chefScreen");
+
+  }
+
+  else{
+
+    showScreen("screen4");
+
+  }
 
 }
 
 
 
 
+// =======================
+// CHEF MENU
+// =======================
 
+function continueToTime(){
+
+  let food=document.getElementById("foodInput").value;
+
+
+  if(food.trim()===""){
+
+    alert("👨‍🍳 Tell the chef what you want!");
+
+    return;
+
+  }
+
+
+  match.food=food;
+
+
+  showScreen("screen4");
+
+}
+
+
+
+
+// =======================
 // TIME
+// =======================
 
 function chooseTime(time){
 
-
-    selectedTime = time;
-
-
-    goalSound.play();
-
-setTimeout(() => {
-    crowdSound.play();
-}, 300);
-let ball = document.getElementById("ball");
-let goal = document.getElementById("goal");
-
-ball.classList.remove("kick");
-ball.classList.add("goalShot");
-
-goal.classList.add("goalShake");
-
-    document.getElementById("screen4").classList.add("hidden");
+  match.time=time;
 
 
-    document.getElementById("result").classList.remove("hidden");
-
-
-
-    document.getElementById("finalText").classList.add("goal");
-
-
-
-    document.getElementById("finalText").innerHTML = `
-
-
-    <h1>🥅 GOOOOOOAAALLL!! ⚽</h1>
-
-
-    <h2>🏆 Match Confirmed!</h2>
-
-
-    <p>
-    📅 ${selectedDay}
-    </p>
-
-
-    <p>
-    📍 ${selectedPlace}
-    </p>
-
-
-    <p>
-    🕒 ${selectedTime}
-    </p>
-
-
-    <br>
-
-
-    <p>
-    See you this weekend! 😄🇫🇷
-    </p>
-
-
-    `;
-
-
-
-    shareMessage = `
-
-⚽ Weekend Match Result
-
-📅 ${selectedDay}
-
-📍 ${selectedPlace}
-
-🕒 ${selectedTime}
-
-See you this weekend! 😄
-
-`;
-
-
-
-    document.getElementById("shareBtn").classList.remove("hidden");
-
+  startGame();
 
 }
 
 
 
 
+// =======================
+// GAME SEQUENCE
+// =======================
 
-// SHARE RESULT
+function startGame(){
+
+  showScreen("result");
+
+
+  document.getElementById("finalText").innerHTML=
+
+  `
+  <h1>⚽ Game On!</h1>
+  <p>
+  Preparing the final kick...
+  </p>
+  `;
+
+
+  setTimeout(()=>{
+
+    shootBall();
+
+  },1000);
+
+}
+
+
+
+
+// =======================
+// BALL SHOOT
+// =======================
+
+function shootBall(){
+
+  let ball=document.getElementById("ball");
+
+  let goal=document.getElementById("goal");
+
+
+  ball.style.transition=
+  "all 1.5s cubic-bezier(.17,.67,.35,1.3)";
+
+
+  ball.style.bottom="430px";
+
+  ball.style.left="50%";
+
+  ball.style.transform=
+  "translateX(-50%) scale(.55) rotate(720deg)";
+
+
+  setTimeout(()=>{
+
+
+    goal.classList.add("goalShake");
+
+
+    celebration();
+
+
+  },1500);
+
+
+
+}
+
+
+
+// =======================
+// CELEBRATION
+// =======================
+
+function celebration(){
+
+
+  document.getElementById("finalText").innerHTML=
+
+  `
+  <h1>🎉 GOOOOAL!!! ⚽</h1>
+
+  <p>
+  📅 ${match.day}<br>
+  📍 ${match.place}<br>
+  ${match.food ? "👨‍🍳 "+match.food+"<br>" : ""}
+  🕒 ${match.time}
+  </p>
+
+  `;
+
+
+
+  createConfetti();
+
+
+  document
+  .getElementById("shareBtn")
+  .classList.remove("hidden");
+
+
+}
+
+
+
+// =======================
+// CONFETTI
+// =======================
+
+function createConfetti(){
+
+  const area=document.getElementById("confetti");
+
+
+  for(let i=0;i<80;i++){
+
+
+    let piece=document.createElement("span");
+
+
+    piece.style.position="absolute";
+
+    piece.style.width="8px";
+
+    piece.style.height="14px";
+
+    piece.style.background=
+    "white";
+
+    piece.style.left=
+    Math.random()*100+"%";
+
+    piece.style.top="-20px";
+
+
+    piece.style.transform=
+    `rotate(${Math.random()*360}deg)`;
+
+
+    piece.style.animation=
+    `fall ${2+Math.random()*3}s linear`;
+
+
+    area.appendChild(piece);
+
+
+  }
+
+
+}
+
+
+
+// =======================
+// SHARE
+// =======================
 
 function shareResult(){
 
 
-    if(navigator.share){
+ let text=
+
+ `⚽ Weekend Match Confirmed!
+
+📅 ${match.day}
+📍 ${match.place}
+${match.food ? "👨‍🍳 "+match.food : ""}
+🕒 ${match.time}
+
+GOOOAL! 🎉`;
 
 
-        navigator.share({
+ if(navigator.share){
 
-            title:"⚽ Weekend Match Result",
+  navigator.share({
 
-            text:shareMessage
+    title:"Weekend Football Plan",
 
-        });
+    text:text
 
+  });
 
-    }
+ }
 
-    else{
+ else{
 
+  navigator.clipboard.writeText(text);
 
-        alert("Take a screenshot and share it 🙂");
+  alert("📋 Match result copied!");
 
-
-    }
+ }
 
 
 }
+
+
+
+// =======================
+// CONFETTI ANIMATION
+// =======================
+
+const style=document.createElement("style");
+
+style.innerHTML=`
+
+@keyframes fall{
+
+from{
+
+transform:translateY(0) rotate(0);
+
+opacity:1;
+
+}
+
+
+to{
+
+transform:translateY(700px) rotate(720deg);
+
+opacity:0;
+
+}
+
+}
+
+`;
+
+document.head.appendChild(style);
