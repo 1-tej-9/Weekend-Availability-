@@ -1,390 +1,95 @@
 let match = {
-  day: "",
-  place: "",
-  food: "",
-  time: ""
+
+day:"",
+place:"",
+food:"",
+details:"",
+time:""
+
 };
 
 
-// =======================
+
 // SOUNDS
-// =======================
 
 const kickSound = new Audio("./kick.mp3");
 const goalSound = new Audio("./goal.mp3");
 const missSound = new Audio("./miss.mp3");
+
 
 kickSound.volume = 1;
 goalSound.volume = 1;
 missSound.volume = 1;
 
 
-function playSound(sound) {
 
-  sound.pause();
-  sound.currentTime = 0;
+function playSound(sound){
 
-  sound.play()
-  .catch(error => {
-    console.log("Sound error:", error);
-  });
+sound.pause();
+sound.currentTime=0;
+
+sound.play().catch(()=>{});
 
 }
 
 
 
-// =======================
+
+
 // LOADING
-// =======================
 
-window.addEventListener("load", () => {
+window.addEventListener("load",()=>{
 
-  setTimeout(() => {
+setTimeout(()=>{
 
-    const loading = document.getElementById("loadingScreen");
+let loading=document.getElementById("loadingScreen");
 
-    if (loading) {
-      loading.style.display = "none";
-    }
+if(loading){
 
-  }, 4000);
+loading.style.display="none";
+
+}
+
+},3000);
+
 
 });
 
 
 
 
-// =======================
+
+
+
 // SCREEN CONTROL
-// =======================
+
 
 function showScreen(id){
 
-  const screens = [
-    "screen1",
-    "screen2",
-    "screen3",
-    "chefScreen",
-    "screen4",
-    "result"
-  ];
 
+[
+"screen1",
+"screen2",
+"screen3",
+"detailsScreen",
+"chefScreen",
+"screen4",
+"result"
 
-  screens.forEach(screen => {
+].forEach(x=>{
 
-    let element = document.getElementById(screen);
+let el=document.getElementById(x);
 
-    if(element){
-      element.classList.add("hidden");
-    }
+if(el){
 
-  });
-
-
-  document.getElementById(id)
-  .classList.remove("hidden");
+el.classList.add("hidden");
 
 }
 
+});
 
 
-// =======================
-// ACCEPT CALL
-// =======================
-
-function acceptCall(){
-
-  playSound(kickSound);
-
-
-  let ball = document.getElementById("ball");
-
-
-  ball.style.transition =
-  "all 1.5s ease";
-
-
-  ball.style.left = "75%";
-
-  ball.style.bottom = "45%";
-
-  ball.style.transform =
-  "translateX(-50%) rotate(720deg) scale(.7)";
-
-
-  setTimeout(()=>{
-
-    showScreen("screen2");
-
-    resetBall();
-
-  },1500);
-
-}
-
-
-
-
-// =======================
-// DECLINE
-// =======================
-
-function declineCall(){
-
-  playSound(missSound);
-
-
-  let ball = document.getElementById("ball");
-
-
-  ball.style.left="90%";
-
-  ball.style.bottom="75%";
-
-  ball.style.transform="rotate(-720deg)";
-
-
-  setTimeout(()=>{
-
-
-    showScreen("result");
-
-
-    document.getElementById("finalText").innerHTML = `
-
-    <h1>❌ MISS!</h1>
-
-    <p>The shot went wide.</p>
-
-    <h2>Maybe next weekend ⚽</h2>
-
-    `;
-
-
-  },1500);
-
-}
-
-
-
-
-function resetBall(){
-
-  let ball=document.getElementById("ball");
-
-
-  ball.style.transition="none";
-
-  ball.style.left="50%";
-
-  ball.style.bottom="90px";
-
-  ball.style.transform="translateX(-50%)";
-
-}
-
-
-
-
-
-// =======================
-// DAY
-// =======================
-
-function chooseDay(day){
-
-  match.day=day;
-
-  showScreen("screen3");
-
-}
-
-
-
-
-// =======================
-// PLACE
-// =======================
-
-function choosePlace(place){
-
-  match.place=place;
-
-
-  if(place.includes("Homemade")){
-
-    showScreen("chefScreen");
-
-  }
-
-  else{
-
-    showScreen("screen4");
-
-  }
-
-}
-
-
-
-
-
-// =======================
-// FOOD
-// =======================
-
-function continueToTime(){
-
-  let food =
-  document.getElementById("foodInput").value;
-
-
-  if(food.trim()===""){
-
-    alert("👨‍🍳 Please enter your favourite dish");
-
-    return;
-
-  }
-
-
-  match.food=food;
-
-
-  showScreen("screen4");
-
-}
-
-
-
-
-
-// =======================
-// TIME
-// =======================
-
-function chooseTime(time){
-
-  match.time=time;
-
-  finalShot();
-
-}
-
-
-
-
-
-// =======================
-// FINAL SHOT
-// =======================
-
-function finalShot(){
-
-
-  showScreen("result");
-
-
-  document.getElementById("finalText").innerHTML = `
-
-  <h1>⚽ Final Shot...</h1>
-
-  <p>Striker is ready!</p>
-
-  `;
-
-
-
-  let ball=document.getElementById("ball");
-
-
-  setTimeout(()=>{
-
-
-    playSound(kickSound);
-
-
-
-    ball.style.transition =
-    "all 1.5s cubic-bezier(.2,.8,.3,1)";
-
-
-    ball.style.left="50%";
-
-    ball.style.bottom="430px";
-
-    ball.style.transform =
-    "translateX(-50%) rotate(720deg) scale(.5)";
-
-
-
-  },700);
-
-
-
-
-  setTimeout(()=>{
-
-
-    playSound(goalSound);
-
-
-    document
-    .getElementById("goal")
-    .classList.add("goalShake");
-
-
-
-    celebration();
-
-
-
-  },2300);
-
-
-
-}
-
-
-
-
-
-// =======================
-// CELEBRATION
-// =======================
-
-function celebration(){
-
-
-document.getElementById("finalText").innerHTML = `
-
-<h1>🥅 GOOOOOOAAALLL!! ⚽🎉</h1>
-
-<h2>🏆 Match Confirmed</h2>
-
-
-<p>📅 ${match.day}</p>
-
-<p>📍 ${match.place}</p>
-
-
-${match.food ? `<p>👨‍🍳 ${match.food}</p>` : ""}
-
-
-<p>🕒 ${match.time}</p>
-
-
-<p>See you this weekend 😄</p>
-
-`;
-
-
-
-createConfetti();
-
-
-document
-.getElementById("shareBtn")
+document.getElementById(id)
 .classList.remove("hidden");
 
 
@@ -394,9 +99,443 @@ document
 
 
 
-// =======================
+
+
+
+// ACCEPT
+
+
+function acceptCall(){
+
+
+playSound(kickSound);
+
+
+let ball=document.getElementById("ball");
+
+
+ball.style.transition="1.5s ease";
+
+ball.style.left="70%";
+
+ball.style.bottom="45%";
+
+ball.style.transform=
+"translateX(-50%) rotate(720deg)";
+
+
+
+setTimeout(()=>{
+
+
+showScreen("screen2");
+
+
+resetBall();
+
+
+},1500);
+
+
+}
+
+
+
+
+
+
+
+// DECLINE
+
+
+function declineCall(){
+
+
+playSound(missSound);
+
+
+let ball=document.getElementById("ball");
+
+
+ball.style.left="90%";
+
+ball.style.bottom="80%";
+
+
+setTimeout(()=>{
+
+
+showScreen("result");
+
+
+document.getElementById("finalText").innerHTML=`
+
+<h1>❌ MISS!</h1>
+
+<p>The shot went wide.</p>
+
+<h2>Maybe another weekend ⚽</h2>
+
+`;
+
+
+},1200);
+
+
+}
+
+
+
+
+
+
+
+
+function resetBall(){
+
+let ball=document.getElementById("ball");
+
+ball.style.transition="none";
+
+ball.style.left="50%";
+
+ball.style.bottom="90px";
+
+ball.style.transform="translateX(-50%)";
+
+
+}
+
+
+
+
+
+
+
+// DAY
+
+
+function chooseDay(day){
+
+match.day=day;
+
+showScreen("screen3");
+
+
+}
+
+
+
+
+
+
+
+
+// PLACE
+
+
+function choosePlace(place){
+
+
+match.place=place;
+
+
+
+if(place.includes("Homemade")){
+
+
+showScreen("chefScreen");
+
+
+}
+
+else{
+
+
+document.getElementById("detailsTitle").innerHTML =
+"📍 Add details";
+
+
+document.getElementById("detailsInput").value="";
+
+
+
+if(place.includes("Café")){
+
+document.getElementById("detailsText").innerHTML =
+"☕ Which café should we visit?";
+
+}
+
+
+else if(place.includes("Book")){
+
+
+document.getElementById("detailsText").innerHTML =
+"📚 Which book café sounds good?";
+
+
+}
+
+
+else if(place.includes("Movie")){
+
+
+document.getElementById("detailsText").innerHTML =
+"🎬 Which movie should we watch?";
+
+
+}
+
+
+showScreen("detailsScreen");
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// DETAILS
+
+
+function continueDetails(){
+
+
+let value=
+document.getElementById("detailsInput").value;
+
+
+if(value.trim()==""){
+
+
+alert("Please add some details 🙂");
+
+return;
+
+
+}
+
+
+
+match.details=value;
+
+
+showScreen("screen4");
+
+
+}
+
+
+
+
+
+
+
+
+
+// HOMEMADE
+
+
+function continueToTime(){
+
+
+let food=
+document.getElementById("foodInput").value;
+
+
+if(food.trim()==""){
+
+
+alert("Please enter your favourite dish");
+
+return;
+
+
+}
+
+
+match.food=food;
+
+
+showScreen("screen4");
+
+
+}
+
+
+
+
+
+
+
+// TIME
+
+
+function chooseTime(time){
+
+
+match.time=time;
+
+
+finalShot();
+
+
+}
+
+
+
+
+
+
+
+// FINAL SHOT
+
+
+function finalShot(){
+
+
+showScreen("result");
+
+
+
+document.getElementById("finalText").innerHTML=`
+
+<h1>⚽ Final shot...</h1>
+
+<p>Almost there!</p>
+
+`;
+
+
+
+let ball=document.getElementById("ball");
+
+
+
+setTimeout(()=>{
+
+
+playSound(kickSound);
+
+
+
+ball.style.transition=
+"1.5s ease";
+
+
+ball.style.left="50%";
+
+ball.style.bottom="430px";
+
+ball.style.transform=
+"translateX(-50%) rotate(720deg)";
+
+
+
+},700);
+
+
+
+
+
+setTimeout(()=>{
+
+
+playSound(goalSound);
+
+
+document
+.querySelector(".goal")
+.classList.add("goalShake");
+
+
+
+showResult();
+
+
+
+},2200);
+
+
+
+}
+
+
+
+
+
+
+
+// RESULT
+
+
+function showResult(){
+
+
+
+document.getElementById("finalText").innerHTML=`
+
+<h1>🥅 GOOOOOOAAALLL!! ⚽</h1>
+
+
+<h2>🏆 Weekend plan locked in</h2>
+
+
+<p>📅 ${match.day}</p>
+
+<p>📍 ${match.place}</p>
+
+
+${match.details ? 
+`<p>📝 ${match.details}</p>`:""}
+
+
+
+${match.food ? 
+`<p>👨‍🍳 ${match.food}</p>`:""}
+
+
+
+<p>🕒 ${match.time}</p>
+
+
+
+<p>
+See you this weekend! 😄⚽
+</p>
+
+
+`;
+
+
+
+document
+.getElementById("shareBtn")
+.classList.remove("hidden");
+
+
+createConfetti();
+
+
+}
+
+
+
+
+
+
+
+
 // CONFETTI
-// =======================
+
 
 function createConfetti(){
 
@@ -404,91 +543,64 @@ function createConfetti(){
 let box=document.getElementById("confetti");
 
 
-if(!box) return;
+for(let i=0;i<40;i++){
 
 
-
-for(let i=0;i<60;i++){
-
-
-let piece=document.createElement("span");
+let item=document.createElement("span");
 
 
-piece.style.position="absolute";
+item.style.position="absolute";
 
-piece.style.width="8px";
+item.style.left=Math.random()*100+"%";
 
-piece.style.height="14px";
+item.style.top="-20px";
 
-piece.style.left=Math.random()*100+"%";
+item.style.width="8px";
 
-piece.style.top="-20px";
+item.style.height="12px";
 
-piece.style.background="white";
+item.style.background="white";
 
-piece.style.animation="drop 3s linear";
+item.style.animation=
+"drop 3s linear";
 
 
-box.appendChild(piece);
+box.appendChild(item);
+
+
+}
 
 
 }
 
 
 
-}
-
-
-
-let style=document.createElement("style");
-
-
-style.innerHTML=`
-
-@keyframes drop {
-
-to {
-
-transform:
-translateY(700px)
-rotate(720deg);
-
-opacity:0;
-
-}
-
-}
-
-`;
-
-
-document.head.appendChild(style);
 
 
 
 
 
-
-// =======================
 // SHARE
-// =======================
+
 
 function shareResult(){
 
 
 let text=
 
-`⚽ Weekend Match Confirmed!
+`⚽ Weekend plan locked in!
 
 📅 ${match.day}
 
 📍 ${match.place}
 
-${match.food ? "👨‍🍳 "+match.food : ""}
+${match.details ? "📝 "+match.details:""}
+
+${match.food ? "👨‍🍳 "+match.food:""}
 
 🕒 ${match.time}
 
-GOOOAL! 🎉`;
+See you this weekend!`;
 
 
 
@@ -497,7 +609,7 @@ if(navigator.share){
 
 navigator.share({
 
-title:"Weekend Match",
+title:"Weekend Plan",
 
 text:text
 
@@ -511,7 +623,7 @@ else{
 
 navigator.clipboard.writeText(text);
 
-alert("📋 Result copied!");
+alert("Result copied!");
 
 }
 
