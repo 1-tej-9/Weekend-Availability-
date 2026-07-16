@@ -14,6 +14,10 @@ const kickSound = new Audio("kick.mp3");
 const goalSound = new Audio("goal.mp3");
 const missSound = new Audio("miss.mp3");
 
+kickSound.volume = 1;
+goalSound.volume = 1;
+missSound.volume = 1;
+
 
 
 // =======================
