@@ -307,7 +307,7 @@ showScreen("detailsScreen");
 
 
 
-}
+
 
 
 
