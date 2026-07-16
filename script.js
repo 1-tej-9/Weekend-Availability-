@@ -24,7 +24,8 @@ function acceptCall(){
 
     let ball = document.getElementById("ball");
 
-    ball.classList.add("kick");
+   ball.classList.remove("goalShot");
+ball.classList.add("kick");
 
 
     setTimeout(()=>{
