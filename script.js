@@ -262,8 +262,11 @@ document.getElementById("detailsInput").value="";
 
 if(place.includes("Café")){
 
+document.getElementById("detailsTitle").innerHTML =
+"☕ Café scouting report";
+
 document.getElementById("detailsText").innerHTML =
-"☕ Which café should we visit?";
+"Need a place where the coffee is strong and the conversation survives. 😄";
 
 }
 
@@ -271,8 +274,11 @@ document.getElementById("detailsText").innerHTML =
 else if(place.includes("Book")){
 
 
+document.getElementById("detailsTitle").innerHTML =
+"📚 Book Café mission";
+
 document.getElementById("detailsText").innerHTML =
-"📚 Which book café sounds good?";
+"Somewhere with books, coffee, and a chair that doesn't judge our reading speed. 😂";
 
 
 }
@@ -281,8 +287,14 @@ document.getElementById("detailsText").innerHTML =
 else if(place.includes("Movie")){
 
 
+document.getElementById("detailsTitle").innerHTML =
+"🎬 Movie decision time";
+
 document.getElementById("detailsText").innerHTML =
-"🎬 Which movie should we watch?";
+"Choose wisely... snacks will be watching your decision. 🍿😂";
+
+
+}
 
 
 }
