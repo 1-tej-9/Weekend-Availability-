@@ -230,12 +230,7 @@ showScreen("screen3");
 
 
 
-
 // PLACE
-
-
-// PLACE
-
 function choosePlace(place){
 
 match.place = place;
@@ -253,28 +248,27 @@ return;
 document.getElementById("detailsTitle").innerHTML =
 "📍 Add details";
 
-
 document.getElementById("detailsInput").value="";
 
 
-if(place.includes("Café")){
-
-document.getElementById("detailsTitle").innerHTML =
-"☕ Café scouting report";
-
-document.getElementById("detailsText").innerHTML =
-"Need a place where the coffee is strong and the conversation survives. 😄";
-
-}
-
-
-else if(place.includes("Book")){
+if(place.includes("Book")){
 
 document.getElementById("detailsTitle").innerHTML =
 "📚 Book Café mission";
 
 document.getElementById("detailsText").innerHTML =
 "Somewhere with books, coffee, and a chair that doesn't judge our reading speed. 😂";
+
+}
+
+
+else if(place.includes("Café")){
+
+document.getElementById("detailsTitle").innerHTML =
+"☕ Café scouting report";
+
+document.getElementById("detailsText").innerHTML =
+"Need a place where the coffee is strong and the conversation survives. 😄";
 
 }
 
@@ -293,6 +287,7 @@ document.getElementById("detailsText").innerHTML =
 showScreen("detailsScreen");
 
 }
+
 // DETAILS
 
 
