@@ -234,6 +234,16 @@ p{
 
 }
 
+.goalShot{
+
+    left:90% !important;
+
+    bottom:42% !important;
+
+    transform:rotate(1080deg) scale(0.6);
+
+}
+
 /* Ball */
 
 #ball{
