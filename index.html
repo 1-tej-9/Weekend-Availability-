@@ -1,98 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weekend Availability ⚽ V2</title>
+
+<title>Weekend Availability ⚽</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
 
+
 <div id="loadingScreen">
+
   <div class="loadingBall">
     <img src="ball.png" alt="Football">
   </div>
+
   <h1>⚽ Warming up...</h1>
+
   <p>Loading this weekend's fixture...</p>
+
 </div>
+
 
 
 
 <div class="stadium">
 
-  <div class="field">
 
-    <img id="goal" src="goal.png" alt="Goal">
-    <img id="ball" src="ball.png" alt="Football">
+<div class="field">
 
-    <div class="container">
-      <div class="card">
 
-        <div id="screen1">
-          <h1>⚽ Checking player availability...</h1>
-          <p class="subtitle">📋 Finalizing this weekend's line-up...</p>
-          <h2>Are you free this weekend?</h2>
+<img id="ball" src="ball.png" alt="Football">
 
-          <button id="acceptBtn" class="btn blue" onclick="acceptCall()">
-            ⚽ Accept Call-Up
-          </button>
 
-          <button class="btn red" onclick="declineCall()">
-            🚫 Decline
-          </button>
-        </div>
 
-        <div id="screen2" class="hidden">
-          <h1>📅 Pick the Matchday</h1>
-          <button class="btn blue" onclick="chooseDay('Saturday')">Saturday</button>
-          <button class="btn blue" onclick="chooseDay('Sunday')">Sunday</button>
-        </div>
+<div class="goal">
 
-        <div id="screen3" class="hidden">
-          <h1>📍 Choose the Game Plan</h1>
-
-          <button class="btn blue" onclick="choosePlace('☕ Café')">☕ Café</button>
-          <button class="btn blue" onclick="choosePlace('📚 Book Café')">📚 Book Café</button>
-          <button class="btn blue" onclick="choosePlace('🌿 Homemade Treats & Fresh Air')">🌿 Homemade Treats & Fresh Air</button>
-          <button class="btn blue" onclick="choosePlace('🎬 Movie')">🎬 Movie</button>
-        </div>
-
-        <div id="chefScreen" class="hidden">
-          <h1>👨‍🍳 Team chef is waiting for your order.</h1>
-          <p>⚽ What's on today's menu?</p>
-
-          <input id="foodInput" type="text" placeholder="Type your favourite dish">
-
-          <button class="btn blue" onclick="continueToTime()">
-            Continue →
-          </button>
-        </div>
-
-        <div id="screen4" class="hidden">
-          <h1>🕒 Choose Kick-Off Time</h1>
-
-          <button class="btn blue" onclick="chooseTime('10:00 AM - 12:00 PM')">🕙 10:00 AM - 12:00 PM</button>
-          <button class="btn blue" onclick="chooseTime('1:00 PM - 3:00 PM')">🕐 1:00 PM - 3:00 PM</button>
-          <button class="btn blue" onclick="chooseTime('4:00 PM - 6:00 PM')">🕓 4:00 PM - 6:00 PM</button>
-          <button class="btn blue" onclick="chooseTime('7:00 PM - 9:00 PM')">🕖 7:00 PM - 9:00 PM</button>
-        </div>
-
-        <div id="result" class="hidden">
-          <div id="confetti"></div>
-          <div id="finalText"></div>
-
-          <button id="shareBtn" class="btn blue hidden" onclick="shareResult()">
-            📸 Share the Match Result
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
+  <div class="net"></div>
 
 </div>
 
+
+
+
+
+<div class="container">
+
+<div class="card">
+
+
+
+<div id="screen1">
+
+
+<h1>⚽ Checking player availability...</h1>
+
+<p class="subtitle">
+📋 Finalizing this weekend's line-up...
+</p>
+
+
+<h2>Are you free this weekend?</h2>
+
+
+<button id="acceptBtn" class="btn blue" onclick="acceptCall()">
+⚽ Accept Call-Up
+</button>
+
+
+<button class="btn red" onclick="declineCall()">
+🚫 Decline
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="screen2" class="hidden">
+
+
+<h1>📅 Pick the Matchday</h1>
+
+<p>When should we play?</p>
+
+
+<button class="btn blue" onclick="chooseDay('Saturday')">
+Saturday
+</button>
+
+
+<button class="btn blue" onclick="chooseDay('Sunday')">
+Sunday
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="screen3" class="hidden">
+
+
+<h1>📍 Choose the Plan</h1>
+
+
+<button class="btn blue" onclick="choosePlace('☕ Café')">
+☕ Café
+</button>
+
+
+<button class="btn blue" onclick="choosePlace('📚 Book Café')">
+📚 Book Café
+</button>
+
+
+<button class="btn blue" onclick="choosePlace('🌿 Homemade Treats & Fresh Air')">
+🌿 Homemade Treats & Fresh Air
+</button>
+
+
+<button class="btn blue" onclick="choosePlace('🎬 Movie')">
+🎬 Movie
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="detailsScreen" class="hidden">
+
+
+<h1 id="detailsTitle">
+📍 Add details
+</h1>
+
+
+<p id="detailsText">
+Tell us the plan details.
+</p>
+
+
+<input 
+id="detailsInput"
+type="text"
+placeholder="Type here..."
+>
+
+
+<button class="btn blue" onclick="continueDetails()">
+Continue ⚽
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="chefScreen" class="hidden">
+
+
+<h1>
+👨‍🍳 Team chef is waiting for your order.
+</h1>
+
+
+<p>
+⚽ What's on today's menu?
+</p>
+
+
+<input 
+id="foodInput"
+type="text"
+placeholder="Type your favourite dish"
+>
+
+
+<button class="btn blue" onclick="continueToTime()">
+Continue →
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="screen4" class="hidden">
+
+
+<h1>
+🕒 Choose Kick-Off Time
+</h1>
+
+
+<button class="btn blue" onclick="chooseTime('10:00 AM - 12:00 PM')">
+🕙 10:00 AM - 12:00 PM
+</button>
+
+
+<button class="btn blue" onclick="chooseTime('1:00 PM - 3:00 PM')">
+🕐 1:00 PM - 3:00 PM
+</button>
+
+
+<button class="btn blue" onclick="chooseTime('4:00 PM - 6:00 PM')">
+🕓 4:00 PM - 6:00 PM
+</button>
+
+
+<button class="btn blue" onclick="chooseTime('7:00 PM - 9:00 PM')">
+🕖 7:00 PM - 9:00 PM
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="result" class="hidden">
+
+
+<div id="confetti"></div>
+
+
+<div id="finalText"></div>
+
+
+<button 
+id="shareBtn"
+class="btn blue hidden"
+onclick="shareResult()">
+
+📸 Share the Match Result
+
+</button>
+
+
+</div>
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+
 <script src="script.js"></script>
+
+
 </body>
+
 </html>
