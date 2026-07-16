@@ -207,15 +207,32 @@ p{
 
     position:absolute;
 
-    right:55px;
+    right:30px;
 
-    top:42%;
+    top:38%;
 
-    font-size:90px;
+    font-size:170px;
+
+    transition:0.4s;
 
 }
 
+.goalShake{
 
+    animation:goalShake .5s ease-in-out;
+
+}
+
+@keyframes goalShake{
+
+    0%{transform:translateX(0);}
+    20%{transform:translateX(-8px);}
+    40%{transform:translateX(8px);}
+    60%{transform:translateX(-6px);}
+    80%{transform:translateX(6px);}
+    100%{transform:translateX(0);}
+
+}
 
 /* Ball */
 
