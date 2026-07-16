@@ -135,6 +135,16 @@ function chooseTime(time){
 
     goalSound.play();
 
+setTimeout(() => {
+    crowdSound.play();
+}, 300);
+let ball = document.getElementById("ball");
+let goal = document.getElementById("goal");
+
+ball.classList.remove("kick");
+ball.classList.add("goalShot");
+
+goal.classList.add("goalShake");
 
     document.getElementById("screen4").classList.add("hidden");
 
