@@ -7,7 +7,7 @@ let match = {
 
 
 // =======================
-// SOUNDS (same folder)
+// SOUNDS
 // =======================
 
 const kickSound = new Audio("./kick.mp3");
@@ -17,6 +17,19 @@ const missSound = new Audio("./miss.mp3");
 kickSound.volume = 1;
 goalSound.volume = 1;
 missSound.volume = 1;
+
+
+function playSound(sound) {
+
+  sound.pause();
+  sound.currentTime = 0;
+
+  sound.play()
+  .catch(error => {
+    console.log("Sound error:", error);
+  });
+
+}
 
 
 
@@ -30,11 +43,11 @@ window.addEventListener("load", () => {
 
     const loading = document.getElementById("loadingScreen");
 
-    if(loading){
+    if (loading) {
       loading.style.display = "none";
     }
 
-  },4000);
+  }, 4000);
 
 });
 
@@ -42,37 +55,36 @@ window.addEventListener("load", () => {
 
 
 // =======================
-// SCREEN CHANGE
+// SCREEN CONTROL
 // =======================
 
 function showScreen(id){
 
-const screens = [
-"screen1",
-"screen2",
-"screen3",
-"chefScreen",
-"screen4",
-"result"
-];
+  const screens = [
+    "screen1",
+    "screen2",
+    "screen3",
+    "chefScreen",
+    "screen4",
+    "result"
+  ];
 
 
-screens.forEach(screen=>{
+  screens.forEach(screen => {
 
-let el=document.getElementById(screen);
+    let element = document.getElementById(screen);
 
-if(el){
-el.classList.add("hidden");
+    if(element){
+      element.classList.add("hidden");
+    }
+
+  });
+
+
+  document.getElementById(id)
+  .classList.remove("hidden");
+
 }
-
-});
-
-
-document.getElementById(id)
-.classList.remove("hidden");
-
-}
-
 
 
 
@@ -82,39 +94,31 @@ document.getElementById(id)
 
 function acceptCall(){
 
-
-kickSound.currentTime=0;
-kickSound.play();
+  playSound(kickSound);
 
 
-let ball=document.getElementById("ball");
+  let ball = document.getElementById("ball");
 
 
-ball.style.transition=
-"all 1.4s ease";
+  ball.style.transition =
+  "all 1.5s ease";
 
 
-ball.style.left="75%";
+  ball.style.left = "75%";
 
-ball.style.bottom="45%";
+  ball.style.bottom = "45%";
 
-ball.style.transform=
-"translateX(-50%) rotate(720deg) scale(.7)";
-
-
-
-setTimeout(()=>{
+  ball.style.transform =
+  "translateX(-50%) rotate(720deg) scale(.7)";
 
 
-showScreen("screen2");
+  setTimeout(()=>{
 
+    showScreen("screen2");
 
-resetBall();
+    resetBall();
 
-
-},1500);
-
-
+  },1500);
 
 }
 
@@ -127,71 +131,58 @@ resetBall();
 
 function declineCall(){
 
-
-missSound.currentTime=0;
-missSound.play();
+  playSound(missSound);
 
 
-
-let ball=document.getElementById("ball");
-
-
-ball.style.left="90%";
-
-ball.style.bottom="75%";
-
-ball.style.transform=
-"rotate(-720deg)";
+  let ball = document.getElementById("ball");
 
 
+  ball.style.left="90%";
 
-setTimeout(()=>{
+  ball.style.bottom="75%";
 
-
-showScreen("result");
-
-
-document.getElementById("finalText").innerHTML=`
-
-<h1>❌ MISS!</h1>
-
-<p>
-The shot went wide.
-</p>
-
-<h2>
-Maybe next weekend ⚽
-</h2>
-
-`;
+  ball.style.transform="rotate(-720deg)";
 
 
+  setTimeout(()=>{
 
-},1500);
+
+    showScreen("result");
 
 
+    document.getElementById("finalText").innerHTML = `
+
+    <h1>❌ MISS!</h1>
+
+    <p>The shot went wide.</p>
+
+    <h2>Maybe next weekend ⚽</h2>
+
+    `;
+
+
+  },1500);
 
 }
-
 
 
 
 
 function resetBall(){
 
-let ball=document.getElementById("ball");
+  let ball=document.getElementById("ball");
 
 
-ball.style.transition="none";
+  ball.style.transition="none";
 
-ball.style.left="50%";
+  ball.style.left="50%";
 
-ball.style.bottom="90px";
+  ball.style.bottom="90px";
 
-ball.style.transform=
-"translateX(-50%)";
+  ball.style.transform="translateX(-50%)";
 
 }
+
 
 
 
@@ -202,9 +193,9 @@ ball.style.transform=
 
 function chooseDay(day){
 
-match.day=day;
+  match.day=day;
 
-showScreen("screen3");
+  showScreen("screen3");
 
 }
 
@@ -217,22 +208,23 @@ showScreen("screen3");
 
 function choosePlace(place){
 
-match.place=place;
+  match.place=place;
 
 
-if(place.includes("Homemade")){
+  if(place.includes("Homemade")){
 
-showScreen("chefScreen");
+    showScreen("chefScreen");
+
+  }
+
+  else{
+
+    showScreen("screen4");
+
+  }
 
 }
 
-else{
-
-showScreen("screen4");
-
-}
-
-}
 
 
 
@@ -243,26 +235,23 @@ showScreen("screen4");
 
 function continueToTime(){
 
-
-let food =
-document.getElementById("foodInput").value;
-
+  let food =
+  document.getElementById("foodInput").value;
 
 
-if(food.trim()===""){
+  if(food.trim()===""){
 
-alert("👨‍🍳 Please enter your favourite dish");
+    alert("👨‍🍳 Please enter your favourite dish");
 
-return;
+    return;
 
-}
-
-
-match.food=food;
+  }
 
 
-showScreen("screen4");
+  match.food=food;
 
+
+  showScreen("screen4");
 
 }
 
@@ -276,12 +265,9 @@ showScreen("screen4");
 
 function chooseTime(time){
 
+  match.time=time;
 
-match.time=time;
-
-
-startFinalShot();
-
+  finalShot();
 
 }
 
@@ -293,74 +279,67 @@ startFinalShot();
 // FINAL SHOT
 // =======================
 
-function startFinalShot(){
+function finalShot(){
 
 
-showScreen("result");
+  showScreen("result");
 
 
+  document.getElementById("finalText").innerHTML = `
 
-document.getElementById("finalText").innerHTML=`
+  <h1>⚽ Final Shot...</h1>
 
-<h1>⚽ Final Shot...</h1>
+  <p>Striker is ready!</p>
 
-<p>
-The striker is ready!
-</p>
-
-`;
+  `;
 
 
 
-let ball=document.getElementById("ball");
+  let ball=document.getElementById("ball");
 
 
-setTimeout(()=>{
+  setTimeout(()=>{
 
 
-kickSound.currentTime=0;
-
-kickSound.play();
-
-
-
-ball.style.transition=
-"all 1.5s cubic-bezier(.2,.8,.3,1)";
+    playSound(kickSound);
 
 
 
-ball.style.left="50%";
-
-ball.style.bottom="430px";
-
-ball.style.transform=
-"translateX(-50%) rotate(720deg) scale(.5)";
+    ball.style.transition =
+    "all 1.5s cubic-bezier(.2,.8,.3,1)";
 
 
+    ball.style.left="50%";
 
-},700);
+    ball.style.bottom="430px";
 
-
-
-setTimeout(()=>{
-
-
-goalSound.currentTime=0;
-
-goalSound.play();
-
-
-let goal=document.getElementById("goal");
-
-goal.classList.add("goalShake");
+    ball.style.transform =
+    "translateX(-50%) rotate(720deg) scale(.5)";
 
 
 
-celebrate();
+  },700);
 
 
 
-},2300);
+
+  setTimeout(()=>{
+
+
+    playSound(goalSound);
+
+
+    document
+    .getElementById("goal")
+    .classList.add("goalShake");
+
+
+
+    celebration();
+
+
+
+  },2300);
 
 
 
@@ -374,45 +353,28 @@ celebrate();
 // CELEBRATION
 // =======================
 
-function celebrate(){
+function celebration(){
 
 
-document.getElementById("finalText").innerHTML=`
+document.getElementById("finalText").innerHTML = `
 
-<h1>
-🥅 GOOOOOOAAALLL!! ⚽🎉
-</h1>
+<h1>🥅 GOOOOOOAAALLL!! ⚽🎉</h1>
 
-
-<h2>
-🏆 Match Confirmed
-</h2>
+<h2>🏆 Match Confirmed</h2>
 
 
-<p>
-📅 ${match.day}
-</p>
+<p>📅 ${match.day}</p>
+
+<p>📍 ${match.place}</p>
 
 
-<p>
-📍 ${match.place}
-</p>
+${match.food ? `<p>👨‍🍳 ${match.food}</p>` : ""}
 
 
-${match.food ?
-`<p>👨‍🍳 ${match.food}</p>`
-:""}
+<p>🕒 ${match.time}</p>
 
 
-<p>
-🕒 ${match.time}
-</p>
-
-
-<p>
-See you this weekend 😄
-</p>
-
+<p>See you this weekend 😄</p>
 
 `;
 
@@ -439,8 +401,7 @@ document
 function createConfetti(){
 
 
-let box=
-document.getElementById("confetti");
+let box=document.getElementById("confetti");
 
 
 if(!box) return;
@@ -459,17 +420,13 @@ piece.style.width="8px";
 
 piece.style.height="14px";
 
-piece.style.left=
-Math.random()*100+"%";
+piece.style.left=Math.random()*100+"%";
 
 piece.style.top="-20px";
 
-
 piece.style.background="white";
 
-
-piece.style.animation=
-`drop 3s linear`;
+piece.style.animation="drop 3s linear";
 
 
 box.appendChild(piece);
@@ -478,15 +435,15 @@ box.appendChild(piece);
 }
 
 
+
 }
 
 
 
-const confettiStyle=
-document.createElement("style");
+let style=document.createElement("style");
 
 
-confettiStyle.innerHTML=`
+style.innerHTML=`
 
 @keyframes drop {
 
@@ -505,7 +462,7 @@ opacity:0;
 `;
 
 
-document.head.appendChild(confettiStyle);
+document.head.appendChild(style);
 
 
 
