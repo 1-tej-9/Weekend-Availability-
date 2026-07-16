@@ -9,28 +9,22 @@
 body {
 
   min-height:100vh;
-  overflow-x:hidden;
+  overflow:hidden;
 
-  background:#061b12;
+  background:#071b0d;
 
 }
 
 
 
-/* =====================
-   LOADING SCREEN
-===================== */
+/* LOADING */
 
 #loadingScreen {
 
   position:fixed;
   inset:0;
 
-  background:
-  linear-gradient(
-    #052414,
-    #0b4223
-  );
+  background:#073014;
 
   display:flex;
   flex-direction:column;
@@ -39,7 +33,7 @@ body {
 
   color:white;
 
-  z-index:999;
+  z-index:1000;
 
 }
 
@@ -48,20 +42,18 @@ body {
 
   width:90px;
 
-  animation:bounceBall 1s infinite;
+  animation:bounce 1s infinite;
 
 }
 
 
-@keyframes bounceBall {
+@keyframes bounce {
 
-  50% {
+50% {
 
-    transform:
-    translateY(-35px)
-    rotate(180deg);
+transform:translateY(-35px) rotate(180deg);
 
-  }
+}
 
 }
 
@@ -69,20 +61,18 @@ body {
 
 
 
-/* =====================
-   STADIUM
-===================== */
+/* STADIUM */
 
 
 .stadium {
 
-  min-height:100vh;
+height:100vh;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
+display:flex;
 
-  padding:20px;
+justify-content:center;
+
+align-items:center;
 
 }
 
@@ -90,186 +80,174 @@ body {
 
 .field {
 
-  position:relative;
+position:relative;
 
-  width:100%;
+width:100%;
 
-  max-width:1100px;
-
-  min-height:700px;
-
-  overflow:hidden;
-
-  border-radius:25px;
+height:100%;
 
 
-  background:
-
-  repeating-linear-gradient(
-    90deg,
-    #16803b 0px,
-    #16803b 90px,
-    #1c9145 90px,
-    #1c9145 180px
-  );
+overflow:hidden;
 
 
-  box-shadow:
+background:
 
-  inset 0 0 80px rgba(0,0,0,.5),
-
-  0 25px 60px rgba(0,0,0,.6);
+repeating-linear-gradient(
+90deg,
+#187c37 0px,
+#187c37 90px,
+#209447 90px,
+#209447 180px
+);
 
 
 }
-
 
 
 
 /* field lines */
 
+.field:before {
 
-.field::before {
+content:"";
 
-  content:"";
+position:absolute;
 
-  position:absolute;
+inset:35px;
 
-  inset:30px;
+border:3px solid rgba(255,255,255,.5);
 
-  border:3px solid rgba(255,255,255,.55);
-
-  border-radius:10px;
-
-}
-
-
-
-.field::after {
-
-  content:"";
-
-  position:absolute;
-
-  left:30px;
-
-  right:30px;
-
-  top:50%;
-
-  height:3px;
-
-  background:white;
-
-  opacity:.5;
+border-radius:15px;
 
 }
 
 
 
+.field:after {
 
+content:"";
 
-/* =====================
-   GOAL + BALL
-===================== */
+position:absolute;
 
+top:50%;
 
-#goal {
+left:0;
 
-  position:absolute;
+right:0;
 
-  width:190px;
+height:3px;
 
-  top:70px;
+background:white;
 
-  left:50%;
-
-  transform:translateX(-50%);
-
-  z-index:3;
-
-  object-fit:contain;
-
-  filter:
-  drop-shadow(
-    0 18px 15px rgba(0,0,0,.45)
-  );
+opacity:.4;
 
 }
 
 
 
-#ball {
 
-  position:absolute;
 
-  width:65px;
+/* GOAL */
 
-  left:50%;
 
-  bottom:95px;
+.goal {
 
-  transform:translateX(-50%);
+position:absolute;
 
-  z-index:8;
+top:55px;
 
-  object-fit:contain;
+left:50%;
 
-  filter:
-  drop-shadow(
-    0 18px 12px rgba(0,0,0,.55)
-  );
+transform:translateX(-50%);
+
+width:220px;
+
+height:140px;
+
+z-index:2;
 
 }
 
 
 
-/* goal shake */
+.goal:before {
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border:6px solid white;
+
+border-bottom:none;
+
+background:rgba(255,255,255,.08);
+
+clip-path:polygon(
+15% 0,
+85% 0,
+100% 100%,
+0 100%
+);
+
+}
+
+
+
+.net {
+
+position:absolute;
+
+inset:15px;
+
+background:
+
+repeating-linear-gradient(
+45deg,
+transparent,
+transparent 12px,
+rgba(255,255,255,.35) 13px
+);
+
+}
+
+
 
 
 .goalShake {
 
- animation:
- goalShakeAnimation .45s ease;
+animation:shake .5s;
 
 }
 
 
-@keyframes goalShakeAnimation {
+@keyframes shake {
 
 
-20% {
+25% {
 
- transform:
- translateX(-50%)
- rotate(7deg);
-
-}
-
-
-40% {
-
- transform:
- translateX(-50%)
- rotate(-7deg);
+transform:
+translateX(-50%)
+rotate(5deg);
 
 }
 
 
-60% {
+50% {
 
- transform:
- translateX(-50%)
- rotate(5deg);
+transform:
+translateX(-50%)
+rotate(-5deg);
 
 }
 
 
 100% {
 
- transform:
- translateX(-50%)
- rotate(0deg);
+transform:
+translateX(-50%)
+rotate(0);
 
 }
 
@@ -280,24 +258,53 @@ body {
 
 
 
-/* =====================
-   CARD
-===================== */
+
+/* BALL */
+
+
+#ball {
+
+position:absolute;
+
+width:65px;
+
+left:50%;
+
+bottom:90px;
+
+transform:translateX(-50%);
+
+z-index:5;
+
+filter:
+
+drop-shadow(
+0 15px 10px rgba(0,0,0,.5)
+);
+
+
+}
+
+
+
+
+
+/* CARD */
 
 
 .container {
 
-  min-height:700px;
+height:100%;
 
-  display:flex;
+display:flex;
 
-  justify-content:center;
+align-items:center;
 
-  align-items:center;
+justify-content:center;
 
-  position:relative;
+position:relative;
 
-  z-index:10;
+z-index:10;
 
 }
 
@@ -305,103 +312,85 @@ body {
 
 .card {
 
+width:90%;
 
-  width:90%;
+max-width:480px;
 
-  max-width:480px;
+padding:35px;
 
-  padding:35px;
+text-align:center;
 
-  text-align:center;
-
-  color:white;
-
-
-  background:
-
-  rgba(255,255,255,.15);
+color:white;
 
 
-  backdrop-filter:
+background:
 
-  blur(15px);
-
-
-
-  border-radius:25px;
+rgba(255,255,255,.16);
 
 
-
-  border:
-
-  1px solid rgba(255,255,255,.25);
+backdrop-filter:blur(15px);
 
 
+border-radius:25px;
 
-  box-shadow:
 
-  0 20px 50px rgba(0,0,0,.45);
+box-shadow:
+
+0 20px 50px rgba(0,0,0,.5);
 
 
 }
-
-
 
 
 
 h1 {
 
-  font-size:28px;
+font-size:28px;
 
-  margin-bottom:15px;
+margin-bottom:15px;
 
 }
-
 
 
 h2 {
 
-  margin:20px 0;
+margin:20px 0;
+
+}
+
+
+p {
+
+margin:15px 0;
 
 }
 
 
 
-.subtitle {
-
-  opacity:.85;
-
-}
 
 
-
-
-
-/* =====================
- BUTTONS
-===================== */
+/* BUTTON */
 
 
 .btn {
 
+width:100%;
 
- width:100%;
+padding:15px;
 
- padding:15px;
+margin:8px 0;
 
- margin:8px 0;
+border:none;
 
- border:none;
+border-radius:50px;
 
- border-radius:15px;
+font-size:17px;
 
- font-size:17px;
+font-weight:bold;
 
- font-weight:bold;
+cursor:pointer;
 
- cursor:pointer;
-
- transition:.3s;
+transition:.3s;
 
 }
 
@@ -409,7 +398,7 @@ h2 {
 
 .btn:hover {
 
- transform:translateY(-4px);
+transform:scale(1.04);
 
 }
 
@@ -417,9 +406,9 @@ h2 {
 
 .blue {
 
- background:#087cff;
+background:#087cff;
 
- color:white;
+color:white;
 
 }
 
@@ -427,9 +416,9 @@ h2 {
 
 .red {
 
- background:#e53935;
+background:#e53935;
 
- color:white;
+color:white;
 
 }
 
@@ -437,98 +426,77 @@ h2 {
 
 
 
-/* =====================
- INPUT
-===================== */
+
+
+/* INPUT */
 
 
 input {
 
+width:100%;
 
- width:100%;
+padding:15px;
 
- padding:15px;
+border:none;
 
- margin:20px 0;
+border-radius:15px;
 
- border:none;
+font-size:16px;
 
- border-radius:12px;
-
- font-size:16px;
-
+margin:15px 0;
 
 }
+
 
 
 
 
 .hidden {
 
- display:none;
+display:none;
 
 }
 
 
 
-
-/* =====================
- CONFETTI
-===================== */
 
 
 #confetti {
 
- position:absolute;
+position:absolute;
 
- inset:0;
+inset:0;
 
- pointer-events:none;
+pointer-events:none;
 
 }
 
 
 
 
-/* =====================
- MOBILE
-===================== */
+
+
+/* MOBILE */
 
 
 @media(max-width:700px){
 
 
-.field {
-
- min-height:100vh;
-
- border-radius:0;
-
-}
-
-
-
-.container {
-
- min-height:100vh;
-
-}
-
-
-
 .card {
 
- padding:25px;
+padding:25px;
 
 }
 
 
 
-#goal {
+.goal {
 
- width:140px;
+width:150px;
 
- top:55px;
+height:95px;
+
+top:45px;
 
 }
 
@@ -536,9 +504,9 @@ input {
 
 #ball {
 
- width:55px;
+width:55px;
 
- bottom:80px;
+bottom:70px;
 
 }
 
@@ -546,7 +514,7 @@ input {
 
 h1 {
 
- font-size:23px;
+font-size:22px;
 
 }
 
@@ -554,12 +522,9 @@ h1 {
 
 .btn {
 
- font-size:15px;
-
- padding:13px;
+font-size:15px;
 
 }
-
 
 
 }
