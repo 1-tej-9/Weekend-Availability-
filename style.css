@@ -199,16 +199,32 @@ clip-path:polygon(
 
 position:absolute;
 
-inset:15px;
+left:20px;
+top:30px;
+
+width:180px;
+height:110px;
 
 background:
 
-repeating-linear-gradient(
-45deg,
-transparent,
-transparent 12px,
-rgba(255,255,255,.35) 13px
+linear-gradient(
+90deg,
+transparent 48%,
+rgba(255,255,255,.6) 50%,
+transparent 52%
+),
+
+linear-gradient(
+transparent 48%,
+rgba(255,255,255,.6) 50%,
+transparent 52%
 );
+
+background-size:20px 20px;
+
+transform:perspective(200px) rotateX(15deg);
+
+opacity:.8;
 
 }
 
